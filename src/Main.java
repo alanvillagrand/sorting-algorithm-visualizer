@@ -9,8 +9,10 @@ public class Main {
     public static void main(String[] args) {
 
         Frame frame = new Frame();
-        SortingPanel sortingPanel = new SortingPanel(50);
+        SortingPanel sortingPanel = new SortingPanel(10);
+        ControlPanel controlPanel = new ControlPanel(sortingPanel);
         frame.add(sortingPanel);
+        //frame.add(controlPanel);
 
     }
 }
