@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class SortingPanel extends JPanel {
@@ -10,10 +12,17 @@ public class SortingPanel extends JPanel {
     final int MAX_VALUE = 500;
     private final int[] array;
     private final ArrayList<JLabel> arrayLabels;
+    private Sort sort;
 
     public SortingPanel(int initialSize) {
+        //this.setBackground(Color.green);
+        this.setPreferredSize(new Dimension(100, 100));
+        //this.setLayout(new BorderLayout());
+
         array = new int[initialSize];
         arrayLabels = new ArrayList<JLabel>(initialSize);
+        sort = new Sort();
+
         this.generateArray(MIN_VALUE, MAX_VALUE);
         this.displayArray();
     }
@@ -30,6 +39,7 @@ public class SortingPanel extends JPanel {
             JLabel element = new JLabel(Integer.toString(array[i]));
             element.setForeground(Color.black);
             this.add(element);
+            //element.setHorizontalAlignment(JLabel.CENTER);
             arrayLabels.add(element);
         }
     }
@@ -41,4 +51,11 @@ public class SortingPanel extends JPanel {
         }
     }
 
+    public void bubbleSortArray() {
+        sort.bubbleSort(array);
+        System.out.println(Arrays.toString(array));
+        for (int i = 0; i < arrayLabels.size(); i++) {
+            arrayLabels.get(i).setText(Integer.toString(array[i]));
+        }
+    }
 }
