@@ -1,8 +1,10 @@
-import javax.naming.ldap.Control;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
+/**
+ * The main frame class that creates a JFrame for the
+ * program and adds all panel classes to the frame
+ */
 public class Frame extends JFrame {
 
     SortingPanel sortingPanel;

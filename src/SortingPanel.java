@@ -1,46 +1,49 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The SortingPanel class that creates a JPanel which includes
+ * all the array functionality and graphics.
+ */
 public class SortingPanel extends JPanel {
+
     final int MIN_VALUE = 5;
     final int MAX_VALUE = 500;
     private final int[] array;
     private final ArrayList<JLabel> arrayLabels;
-    private Sort sort;
+    private final Sort sort;
 
-    public SortingPanel(int initialSize) {
-        //this.setBackground(Color.green);
-        this.setPreferredSize(new Dimension(100, 100));
-        //this.setLayout(new BorderLayout());
+    public SortingPanel(int arraySize) {
 
-        array = new int[initialSize];
-        arrayLabels = new ArrayList<JLabel>(initialSize);
+        // Assign variables
+        array = new int[arraySize];
+        arrayLabels = new ArrayList<>(arraySize);
         sort = new Sort();
 
+        // Generate random array
         this.generateArray(MIN_VALUE, MAX_VALUE);
         this.displayArray();
     }
 
     public void paintComponent(Graphics g) {
+        // Set graphic attributes
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(new Color(0, 150, 255));
 
+        // Draw array values as rectangles
         int space = 0;
+        int rectX = (this.getSize().width / 2) - (array.length * 10 + 30);
+        int rectY = this.getSize().height;
 
         for (int i = 0; i < array.length; i++) {
-            g2d.drawRect(430 + space, 200, 20, array[i]);
-            g2d.fillRect(430 + space, 200, 20, array[i]);
+            g2d.drawRect(rectX + space, rectY, 20, -(array[i]));
+            g2d.fillRect(rectX + space, rectY, 20, -(array[i]));
             space += 30;
         }
-
-        System.out.println("Paint called");
     }
 
     private void generateArray(int min, int max) {
@@ -55,7 +58,6 @@ public class SortingPanel extends JPanel {
             JLabel element = new JLabel(Integer.toString(array[i]));
             element.setForeground(Color.black);
             this.add(element);
-            //element.setHorizontalAlignment(JLabel.CENTER);
             arrayLabels.add(element);
         }
     }
@@ -65,6 +67,7 @@ public class SortingPanel extends JPanel {
         for (int i = 0; i < arrayLabels.size(); i++) {
             arrayLabels.get(i).setText(Integer.toString(array[i]));
         }
+        repaint();
     }
 
     public void bubbleSortArray() {
@@ -73,5 +76,6 @@ public class SortingPanel extends JPanel {
         for (int i = 0; i < arrayLabels.size(); i++) {
             arrayLabels.get(i).setText(Integer.toString(array[i]));
         }
+        repaint();
     }
 }
