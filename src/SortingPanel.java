@@ -27,6 +27,22 @@ public class SortingPanel extends JPanel {
         this.displayArray();
     }
 
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(new Color(0, 150, 255));
+
+        int space = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            g2d.drawRect(430 + space, 200, 20, array[i]);
+            g2d.fillRect(430 + space, 200, 20, array[i]);
+            space += 30;
+        }
+
+        System.out.println("Paint called");
+    }
+
     private void generateArray(int min, int max) {
         Random random = new Random();
         for (int i = 0; i < array.length; i++) {
