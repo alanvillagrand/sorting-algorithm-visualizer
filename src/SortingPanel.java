@@ -14,11 +14,10 @@ public class SortingPanel extends JPanel implements ActionListener {
 
     final int MIN_VALUE = 5;
     final int MAX_VALUE = 500;
-    private final int[] array;
-    private final ArrayList<JLabel> arrayLabels;
+    private int[] array;
     private final Sort sort;
     Timer checkTimer;
-    Timer swtichTimer;
+    Timer switchTimer;
     boolean bubbleSortRunning;
     boolean switchElements;
     int selectedIndex1;
@@ -26,12 +25,12 @@ public class SortingPanel extends JPanel implements ActionListener {
     int indexVelocity;
     int innerLoopCompletions;
     int uncheckedElements;
+    int speed;
 
     public SortingPanel(int arraySize) {
 
         // Assign variables
         array = new int[arraySize];
-        arrayLabels = new ArrayList<>(arraySize);
         sort = new Sort();
         bubbleSortRunning = false;
         switchElements = false;
@@ -40,13 +39,13 @@ public class SortingPanel extends JPanel implements ActionListener {
         indexVelocity = 0;
         innerLoopCompletions = 0;
         uncheckedElements = 0;
+        speed = 1000;
 
         // Generate random array
         this.generateArray(MIN_VALUE, MAX_VALUE);
-        this.displayArray();
 
-        checkTimer = new Timer(100, this);
-        swtichTimer = new Timer(0, this);
+        checkTimer = new Timer(speed, this);
+        switchTimer = new Timer(0, this);
     }
 
     public void paintComponent(Graphics g) {
@@ -57,25 +56,28 @@ public class SortingPanel extends JPanel implements ActionListener {
 
         // Draw array values as rectangles
         int space = 0;
-        int rectX = (this.getSize().width / 2) - (array.length * 10 + 30);
+        int width = 20;
+        int rectX = (this.getSize().width / 2) - 10 - ((array.length - 1) * 15);
         int rectY = this.getSize().height;
+
+        //g2d.drawLine(this.getSize().width / 2, 100, this.getSize().width / 2, this.getSize().height);
 
         for (int i = 0; i < array.length; i++) {
             if (i == selectedIndex1 || i == selectedIndex2) {
                 g2d.setColor(Color.green);
                 if (switchElements) {
                     if (i == selectedIndex1) {
-                        g2d.drawRect(rectX + space + indexVelocity, rectY, 20, -(array[i]));
-                        g2d.fillRect(rectX + space + indexVelocity, rectY, 20, -(array[i]));
+                        g2d.drawRect(rectX + space + indexVelocity, rectY, width, -(array[i]));
+                        g2d.fillRect(rectX + space + indexVelocity, rectY, width, -(array[i]));
                     }
                     else {
-                        g2d.drawRect(rectX + space - indexVelocity, rectY, 20, -(array[i]));
-                        g2d.fillRect(rectX + space - indexVelocity, rectY, 20, -(array[i]));
+                        g2d.drawRect(rectX + space - indexVelocity, rectY, width, -(array[i]));
+                        g2d.fillRect(rectX + space - indexVelocity, rectY, width, -(array[i]));
                     }
                 }
                 else {
-                    g2d.drawRect(rectX + space, rectY, 20, -(array[i]));
-                    g2d.fillRect(rectX + space, rectY, 20, -(array[i]));
+                    g2d.drawRect(rectX + space, rectY, width, -(array[i]));
+                    g2d.fillRect(rectX + space, rectY, width, -(array[i]));
                 }
             }
             else {
@@ -85,10 +87,10 @@ public class SortingPanel extends JPanel implements ActionListener {
                 else {
                     g2d.setColor(new Color(0, 150, 255));
                 }
-                g2d.drawRect(rectX + space, rectY, 20, -(array[i]));
-                g2d.fillRect(rectX + space, rectY, 20, -(array[i]));
+                g2d.drawRect(rectX + space, rectY, width, -(array[i]));
+                g2d.fillRect(rectX + space, rectY, width, -(array[i]));
             }
-            space += 30;
+            space = space + 30;
         }
     }
 
@@ -99,20 +101,66 @@ public class SortingPanel extends JPanel implements ActionListener {
         }
     }
 
-    private void displayArray() {
-        for (int i = 0; i < array.length; i++) {
-            JLabel element = new JLabel(Integer.toString(array[i]));
-            element.setForeground(Color.black);
-            this.add(element);
-            arrayLabels.add(element);
+    public void updateArray() {
+        this.generateArray(MIN_VALUE, MAX_VALUE);
+        repaint();
+    }
+
+    public void updateArray(int[] newArray) {
+        this.array = newArray;
+        repaint();
+    }
+
+    public void resizeArray(int newSize) {
+        int originalSize = this.array.length;
+        this.array = Arrays.copyOf(this.array, newSize);
+        if (newSize > originalSize) {
+            Random random = new Random();
+            for (int i = originalSize; i < newSize; i++) {
+                this.array[i] = random.nextInt(MAX_VALUE - MIN_VALUE + 1) + MIN_VALUE;
+            }
+        }
+        repaint();
+    }
+
+    public int[] getArray() {
+        return array;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        checkTimer.stop();
+        checkTimer = new Timer(this.speed, this);
+        if (bubbleSortRunning && !switchElements) {
+            checkTimer.start();
         }
     }
 
-    public void updateArray() {
-        this.generateArray(MIN_VALUE, MAX_VALUE);
-        for (int i = 0; i < arrayLabels.size(); i++) {
-            arrayLabels.get(i).setText(Integer.toString(array[i]));
+    public void pauseSort() {
+        if (switchElements) {
+            switchTimer.stop();
         }
+        else {
+            checkTimer.stop();
+        }
+    }
+
+    public void resumeSort() {
+        if (switchElements) {
+            switchTimer.start();
+        }
+        else {
+            checkTimer.start();
+        }
+    }
+
+    public void skipSort() {
+        checkTimer.stop();
+        switchTimer.stop();
+        bubbleSortRunning = false;
+        selectedIndex1 = selectedIndex2 = -1;
+        innerLoopCompletions = uncheckedElements = 0;
+        sort.bubbleSort(array);
         repaint();
     }
 
@@ -133,15 +181,35 @@ public class SortingPanel extends JPanel implements ActionListener {
                 int temp = array[selectedIndex1];
                 array[selectedIndex1] = array[selectedIndex2];
                 array[selectedIndex2] = temp;
-                swtichTimer.stop();
+                switchTimer.stop();
                 checkTimer.start();
                 indexVelocity = 0;
             }
             else {
                 switchElements = true;
                 checkTimer.stop();
-                swtichTimer.start();
-                indexVelocity++;
+                switchTimer.start();
+                if (this.speed > 900) {
+                    indexVelocity += 1;
+                } else if (this.speed > 800) {
+                    indexVelocity += 3;
+                } else if (this.speed > 700) {
+                    indexVelocity += 6;
+                } else if (this.speed > 600) {
+                    indexVelocity += 9;
+                } else if (this.speed > 500) {
+                    indexVelocity += 12;
+                } else if (this.speed > 400) {
+                    indexVelocity += 15;
+                } else if (this.speed > 300) {
+                    indexVelocity += 18;
+                } else if (this.speed > 200) {
+                    indexVelocity += 21;
+                } else if (this.speed > 100) {
+                    indexVelocity += 24;
+                } else {
+                    indexVelocity += 27;
+                }
             }
         }
         else if (uncheckedElements <= 1) {
