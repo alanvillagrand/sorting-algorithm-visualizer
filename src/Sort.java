@@ -1,5 +1,10 @@
 import java.util.Arrays;
 
+/**
+ * Sort class used for sorting arrays. This class
+ * currently only has one use so might remove later.
+ * - Alan Villagrand
+ */
 public class Sort {
 
     public void bubbleSort(int[] arr) {

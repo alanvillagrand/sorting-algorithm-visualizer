@@ -9,6 +9,7 @@ import java.util.Random;
 /**
  * The SortingPanel class that creates a JPanel which includes
  * all the array functionality and graphics.
+ * - Alan Villagrand
  */
 public class SortingPanel extends JPanel implements ActionListener {
 
