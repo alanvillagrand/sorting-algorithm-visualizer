@@ -3,7 +3,8 @@ import java.awt.*;
 
 /**
  * The main frame class that creates a JFrame for the
- * program and adds all panel classes to the frame
+ * program and adds all panel classes to the frame.
+ * - Alan Villagrand
  */
 public class Frame extends JFrame {
 
@@ -12,7 +13,7 @@ public class Frame extends JFrame {
 
     public Frame() {
         // Set up frame
-        this.setTitle("Sorting Visualizer"); // sets title
+        this.setTitle("Sorting Algorithm Visualizer"); // sets title
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow exit out of application
         this.setSize(1280,720); // set window dimensions
         this.setLocationRelativeTo(null); // center window

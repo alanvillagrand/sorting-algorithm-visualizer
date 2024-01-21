@@ -9,6 +9,7 @@ import java.util.Arrays;
 /**
  * The ControlPanel class that creates a JPanel which includes all
  * the control functionality and graphics.
+ * - Alan Villagrand
  */
 public class ControlPanel extends JPanel implements ActionListener, ChangeListener {
 
@@ -130,13 +131,13 @@ public class ControlPanel extends JPanel implements ActionListener, ChangeListen
         speedLabel = new JLabel("Speed =");
         speedLabel.setForeground(Color.white);
 
-        bubbleRunTimeLabel = new JLabel("          O(n^2)          ");
+        bubbleRunTimeLabel = new JLabel("              O(n^2)              ");
         bubbleRunTimeLabel.setForeground(Color.white);
 
-        insertionRunTimeLabel = new JLabel("              O(n^2)              ");
+        insertionRunTimeLabel = new JLabel("              O(n^2)                  ");
         insertionRunTimeLabel.setForeground(Color.white);
 
-        quickRunTimeLabel = new JLabel("    O(nlogn)        ");
+        quickRunTimeLabel = new JLabel("        O(nlogn)          ");
         quickRunTimeLabel.setForeground(Color.white);
 
         mergeRunTimeLabel = new JLabel("        O(nlogn)    ");
