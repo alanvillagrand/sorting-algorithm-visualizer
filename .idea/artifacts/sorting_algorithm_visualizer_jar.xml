@@ -1,10 +1,8 @@
 <component name="ArtifactManager">
-  <artifact name="sorting-algorithm-visualizer:jar">
+  <artifact type="jar" name="sorting-algorithm-visualizer:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/sorting_algorithm_visualizer_jar</output-path>
-    <root id="root">
-      <element id="archive" name="sorting-algorithm-visualizer.jar">
-        <element id="module-output" name="sorting-algorithm-visualizer" />
-      </element>
+    <root id="archive" name="sorting-algorithm-visualizer.jar">
+      <element id="module-output" name="sorting-algorithm-visualizer" />
     </root>
   </artifact>
 </component>
