@@ -46,7 +46,7 @@ public class SortingPanel extends JPanel implements ActionListener {
         this.generateArray(MIN_VALUE, MAX_VALUE);
 
         checkTimer = new Timer(speed, this);
-        switchTimer = new Timer(0, this);
+        switchTimer = new Timer(1, this);
     }
 
     public void paintComponent(Graphics g) {
