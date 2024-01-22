@@ -17,6 +17,6 @@ Click on whichever sorting algorithm and watch the magic happen! (animations are
 ![Screenshot 4](https://github.com/alanvillagrand/sorting-algorithm-visualizer/assets/116222100/b655abd6-03c2-4cd7-b47e-17e7c72f8b7c)
 
 ## Change speed
-Use the scroll bar to speed up the process if needed. (It's finicky at the moment but will be fixed soon). Feel free to pause or skip the animation as well.
+Use the scroll bar to speed up the process if needed. (It's a little finicky at the moment but will be fixed soon). Feel free to pause or skip the animation as well.
 
 ![Screenshot 5](https://github.com/alanvillagrand/sorting-algorithm-visualizer/assets/116222100/691827f7-2c09-41ac-affd-260df2e21781)
